@@ -105,12 +105,23 @@ namespace TV_Sales_Page1
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
+            Dictionary<string, int> televisions; 
             
-            foreach (string key in televisions.Keys)
+            televisions = new Dictionary<string, int>();
+            string choice = Request.QueryString["img"];
+
+            Product[] allProducts = Data.SampleData();
+
+            for (int i = 0; i < 10; i++)
             {
-                televisions[key] = 0 ;
+                televisions.Add(allProducts[i].Name, 0);
             }
+
+            txtQuantWant.Enabled = true;
+            txtQuantWant.Text = "";
+            lblquant.Text = string.Format("{0:0}", televisions[choice] + 3);
+            lblHowMuch.Text = ("You currently have " + televisions[choice]);
+
 
             Session["cart"] = televisions; 
         }
