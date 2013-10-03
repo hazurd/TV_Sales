@@ -14,10 +14,12 @@
         <div class="header">
             <div class="title">
                 <h1>
-                    My ASP.NET Application
+                    Dave&#39;s Television sales
                 </h1>
             </div>
             <div class="loginDisplay">
+                <asp:Image ID="Image1" runat="server" Height="95px" 
+                    ImageUrl="~/Images/logo.png" Width="100px" />
                 <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
                     <AnonymousTemplate>
                         [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]

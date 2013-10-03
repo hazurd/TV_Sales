@@ -14,16 +14,18 @@ namespace TV_Sales_Page1
         private string description;
         private int quantity;
         private string imageUrl;
+        private double price;
 
 		/* ======================================================================
 		   Constructor(s)
 		   ---------------------------------------------------------------------- */
-        public Product(string n, string desc, int q, string i)
+        public Product(string n, string desc, int q, string i, double p)
 		{
             name = n;
             description = desc;
             quantity = q;
             imageUrl = i;
+            price = p;
 		}
 
 		
@@ -34,6 +36,30 @@ namespace TV_Sales_Page1
         {
             get { return name; }
         }
+
+        public int Quantity
+        {
+            get { return quantity; }
+        }
+
+        public string Description
+        {
+            get { return description; }
+        }
+
+        public double Price
+        {
+            get { return price; }
+        }
+
+
+        public string URL
+        {
+            get { return imageUrl; }
+        }
+
+  
+
     }
 
 	/* `Data` is a "utility" class. You don't create instances of it:
@@ -61,24 +87,24 @@ namespace TV_Sales_Page1
         {
 			// intialize the sample data
             data = new Product[SIZE];
-            data[0] = new Product("Samsung", "Garbage", 3, "~/Images/Samsung.jpg");
-            data[1] = new Product("LG", "Garbage", 3);
-            data[2] = new Product("Sony", "Garbage", 3);
-            data[3] = new Product("Panasonic", "Garbage", 3);
-            data[4] = new Product("Vizio", "Garbage", 3);
-            data[5] = new Product("Mitsubishi", "Garbage", 3);
-            data[6] = new Product("Phillips", "Garbage", 3);
-            data[7] = new Product("Toshiba", "Garbage", 3);
-            data[8] = new Product("Sanyo", "Garbage", 3);
-            data[9] = new Product("Sharp", "Garbage", 3);
-
-       
-        }
+            data[0] = new Product("Samsung", "~/Descriptions/samsung.txt", 3, "~/Images/Samsung.jpg",470.32);
+            data[1] = new Product("LG", "~/Descriptions/LG.txt", 3, "~/Images/LG.jpg",832.48);
+            data[2] = new Product("Sony", "~/Descriptions/sony.txt", 3, "~/Images/sony-bravia-40.jpg",692.49);
+            data[3] = new Product("Panasonic", "~/Descriptions/panasonic.txt", 3, "~/Images/Panasonic.jpg",642.49);
+            data[4] = new Product("Vizio", "~/Descriptions/vizio.txt", 3, "~/Images/Vizio.jpg",454.60);
+            data[5] = new Product("Mitsubishi", "~/Descriptions/mitsubishi.txt", 3, "~/Images/Mitsubishi.jpg",4997.99);
+            data[6] = new Product("Phillips", "~/Descriptions/phillips.txt", 3, "~/Images/Phillips.jpg",522.49);
+            data[7] = new Product("Toshiba", "~/Descriptions/toshiba.txt", 3, "~/Images/Toshiba.jpg",722.48);
+            data[8] = new Product("Sanyo", "~/Descriptions/sanyo.txt", 3, "~/Images/Sanyo.jpg",560.64);
+            data[9] = new Product("Sharp", "~/Descriptions/sharp.txt", 3, "~/Images/Sharp.jpg",442.47);
+  
+       }
 
 		// retrieve the sample data.
         public static Product[] SampleData()
         {
             return data;
         }
+
     }
 }
