@@ -10,12 +10,22 @@ namespace TV_Sales_Page1
 {
     public partial class Product_Description : System.Web.UI.Page
     {
+        private Product theProduct;
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
             //Getting all products with requested image 
             string choice = Request.QueryString["img"];
-            Product[] allProducts = Data.SampleData();
+
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+            var query = from p in context.Products
+                        where p.ImageUrl == choice
+                        select p;
+            theProduct = query.Single();
+
+            // TO REMOVE: Product[] allProducts = Data.SampleData();
 
             //Keeping the same quantity
             Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
@@ -31,26 +41,35 @@ namespace TV_Sales_Page1
             televisions = setBasics(televisions, choice);
 
             //Setting the IMage and Description according to what the user wants
-            setImage(allProducts, choice);
-
+            // TO REMOVE: setImage(allProducts, choice);
+            setImage();
         }
 
 
-        private void setImage(Product[] allProducts, string choice)
+        private void setImage()
+        {
+            img_tv.ImageUrl = theProduct.ImageUrl;
+            var pathToFile = Server.MapPath(allProducts[i].Description);
+            lbldes.Text = File.ReadAllText(pathToFile);
+            lblprice.Text = string.Format("{0:C}", allProducts[i].Price);                   
+               
+        }
+
+        /* TO REMOVEprivate void setImage(Product[] allProducts, string choice)
         {
 
             for (int i = 0; i < 10; i++)
             {
                 if (choice == allProducts[i].Name)
                 {
-                    img_tv.ImageUrl = allProducts[i].URL;
+                    img_tv.ImageUrl = allProducts[i].ImageUrl;
                     var pathToFile = Server.MapPath(allProducts[i].Description);
                     lbldes.Text = File.ReadAllText(pathToFile);
                     lblprice.Text = string.Format("{0:C}", allProducts[i].Price);                   
                 }
 
             }
-        }
+        }*/
 
         private Dictionary<string, int> setBasics(Dictionary<string, int> televisions, string choice)
         {

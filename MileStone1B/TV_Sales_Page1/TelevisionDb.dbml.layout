@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="TelevisionDb">
+  <DataContextMoniker Name="/TelevisionDbDataContext" />
+  <nestedChildShapes>
+    <classShape Id="affca9b8-cf11-4828-a66d-ed726875ed1e" absoluteBounds="0.875, 1.125, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/TelevisionDbDataContext/Product" />
+      <nestedChildShapes>
+        <elementListCompartment Id="687e839b-db77-4691-9aa1-0e4551b5a24d" absoluteBounds="0.89000000000000012, 1.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

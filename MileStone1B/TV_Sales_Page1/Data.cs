@@ -5,11 +5,11 @@ using System.Web;
 
 namespace TV_Sales_Page1
 {
-    public class Product 
+  /*  public class Product 
     {
 		/* ======================================================================
 		   Fields
-		   ---------------------------------------------------------------------- */
+		   ---------------------------------------------------------------------- 
         private string name;
         private string description;
         private int quantity;
@@ -18,7 +18,7 @@ namespace TV_Sales_Page1
 
 		/* ======================================================================
 		   Constructor(s)
-		   ---------------------------------------------------------------------- */
+		   ---------------------------------------------------------------------- * /
         public Product(string n, string desc, int q, string i, double p)
 		{
             name = n;
@@ -31,7 +31,7 @@ namespace TV_Sales_Page1
 		
 		/* ======================================================================
 		   Public interface (methods and properties)
-		   ---------------------------------------------------------------------- */
+		   ---------------------------------------------------------------------- * /
         public string Name
         {
             get { return name; }
@@ -61,7 +61,7 @@ namespace TV_Sales_Page1
   
 
     }
-
+*/
 	/* `Data` is a "utility" class. You don't create instances of it:
 
     	   Data d = new Data(); // do not do this
@@ -106,5 +106,28 @@ namespace TV_Sales_Page1
             return data;
         }
 
+        public static bool ReSeedData(out string error)
+        {
+            // LINQ-to-SQL data context. Automatically created with .dbml
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+            try
+            {
+                // delete all existing rows (DELETE FROM Defects).
+                context.Products.DeleteAllOnSubmit(context.Products);
+                // insert each Defect from the sample data
+                foreach (Product d in data)
+                    context.Products.InsertOnSubmit(d);
+                // commit
+                context.SubmitChanges();
+                error = "";
+                return true;
+            }
+            catch (Exception e)
+            {
+                // return message from thrown exception
+                error = e.Message;
+                return false;
+            }
+        }
     }
 }
