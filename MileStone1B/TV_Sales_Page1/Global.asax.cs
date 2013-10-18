@@ -30,17 +30,22 @@ namespace TV_Sales_Page1
 
         void Session_Start(object sender, EventArgs e)
         {
-            // Code that runs when a new session is started
+            //Getting all Names from database to List
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+            var query = (from p in context.Products
+                        select p.Name).ToList();
 
-            Product[] allProducts = Data.SampleData();    
+            List<string> names = new List<string>();
+            names = query;
+
             Dictionary<string, int> televisions = new Dictionary<string, int>();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < names.Count; i++)
             {
-                televisions.Add(allProducts[i].Name, 0);
+                televisions.Add(names[i].Trim(), 0);
             }
 
-                Session["cart"] = televisions;
+            Session["cart"] = televisions;
         }
 
         void Session_End(object sender, EventArgs e)

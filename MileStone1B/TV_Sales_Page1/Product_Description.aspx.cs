@@ -12,7 +12,6 @@ namespace TV_Sales_Page1
     {
         private Product theProduct;
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,63 +20,40 @@ namespace TV_Sales_Page1
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
             var query = from p in context.Products
-                        where p.ImageUrl == choice
+                        where p.Name == choice
                         select p;
             theProduct = query.Single();
 
-            // TO REMOVE: Product[] allProducts = Data.SampleData();
-
-            //Keeping the same quantity
+            //Keeping the same Quantity Through Session
             Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
 
-            //Enable User to keep using
-            if (televisions[choice] == 3)
+            //Enable User to Keep Using Based On Stock
+            if (televisions[choice] == theProduct.Quantity)
             {
                 txtQuantWant.Text = "Out of Stock";
                 txtQuantWant.Enabled = false;
             }
 
             //Setting the Basics
-            televisions = setBasics(televisions, choice);
-
-            //Setting the IMage and Description according to what the user wants
-            // TO REMOVE: setImage(allProducts, choice);
+            televisions = setBasics(televisions);
             setImage();
         }
 
-
+        //Updated Database Version
         private void setImage()
         {
             img_tv.ImageUrl = theProduct.ImageUrl;
-            var pathToFile = Server.MapPath(allProducts[i].Description);
+            var pathToFile = Server.MapPath(theProduct.Description);
             lbldes.Text = File.ReadAllText(pathToFile);
-            lblprice.Text = string.Format("{0:C}", allProducts[i].Price);                   
-               
+            lblprice.Text = string.Format("{0:C}", theProduct.Price);                           
         }
 
-        /* TO REMOVEprivate void setImage(Product[] allProducts, string choice)
+        private Dictionary<string, int> setBasics(Dictionary<string, int> televisions)
         {
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (choice == allProducts[i].Name)
-                {
-                    img_tv.ImageUrl = allProducts[i].ImageUrl;
-                    var pathToFile = Server.MapPath(allProducts[i].Description);
-                    lbldes.Text = File.ReadAllText(pathToFile);
-                    lblprice.Text = string.Format("{0:C}", allProducts[i].Price);                   
-                }
-
-            }
-        }*/
-
-        private Dictionary<string, int> setBasics(Dictionary<string, int> televisions, string choice)
-        {
-
             //Total items
             int total = 0;
 
-            //Going through Dictionary to see how many items ordered
+            //Going through Dictionary to see how many items ordered Total
             foreach (var key in televisions.Keys)
             {
                 int value = televisions[key];
@@ -85,7 +61,7 @@ namespace TV_Sales_Page1
             }
 
             //Update how many left
-            int quantLeft = 3 - televisions[choice];
+            int quantLeft = (int)theProduct.Quantity - televisions[theProduct.Name];
             lblquant.Text = string.Format("{0:0}", quantLeft);
 
             lblHowMuch.Text = ("You currently have " + total);
@@ -96,51 +72,52 @@ namespace TV_Sales_Page1
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string choice = Request.QueryString["img"];
+           //Adding an Item to the Cart
+
             Dictionary<string, int> televisions = (Dictionary<string,int>)Session["cart"];
 
-            if (televisions[choice] + int.Parse(txtQuantWant.Text) > 3)
+            if (televisions[theProduct.Name] + int.Parse(txtQuantWant.Text) > 3)
             {
                 txtQuantWant.Text = "Quantity to Little";
             }
             else
             {
                 int quantwant = int.Parse(txtQuantWant.Text);
-                televisions[choice] += quantwant;
+                televisions[theProduct.Name] += quantwant;
 
-                if (televisions[choice] == 3)
+                if (televisions[theProduct.Name] == 3)
                 {
                     txtQuantWant.Text = "Out of Stock";
                     txtQuantWant.Enabled = false;
                 }
             }
 
-            televisions = setBasics(televisions, choice);
-
-
+            televisions = setBasics(televisions);
             Session["cart"] = televisions;
-
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Dictionary<string, int> televisions; 
-            
-            televisions = new Dictionary<string, int>();
-            string choice = Request.QueryString["img"];
+            //Reset All Values Inside Dictionary
 
-            Product[] allProducts = Data.SampleData();
+            Dictionary<string, int> televisions = new Dictionary<string, int>();
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
 
-            for (int i = 0; i < 10; i++)
+            var query = (from p in context.Products
+                         select p.Name).ToList();
+
+            List<string> names = new List<string>();
+            names = query;
+
+            for (int i = 0; i < names.Count; i++)
             {
-                televisions.Add(allProducts[i].Name, 0);
+                televisions.Add(names[i].Trim(), 0);
             }
 
             txtQuantWant.Enabled = true;
             txtQuantWant.Text = "";
-            lblquant.Text = string.Format("{0:0}", televisions[choice] + 3);
-            lblHowMuch.Text = ("You currently have " + televisions[choice]);
-
+            lblquant.Text = string.Format("{0:0}", televisions[theProduct.Name] + 3);
+            lblHowMuch.Text = ("You currently have " + televisions[theProduct.Name]);
 
             Session["cart"] = televisions; 
         }

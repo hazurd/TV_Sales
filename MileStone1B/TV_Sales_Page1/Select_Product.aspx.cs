@@ -7,24 +7,25 @@ using System.Web.UI.WebControls;
 
 namespace TV_Sales_Page1
 {
-
     public partial class Select_Product : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string choice = Request.QueryString["choice"];
-            Product[] allProducts = Data.SampleData();
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+            var query = (from p in context.Products
+                         select p.Name).ToList();
+
+            List<string> names = new List<string>();
+            names = query;
 
             if (!IsPostBack)
             {
                 //Place all products in the drop down menu
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < names.Count; i++)
                 {
-                    ddlTvChoice.Items.Add(allProducts[i].Name);
-                  
+                    ddlTvChoice.Items.Add(names[i].Trim()); 
                 }
             }
-
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
