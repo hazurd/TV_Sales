@@ -11,4 +11,40 @@ Here are the products we are currently offering:<br />
 &nbsp;&nbsp;&nbsp;
 <asp:Button ID="btn_go" runat="server" onclick="btn_go_Click" Text="Go!!" 
     Width="70px" />
+    <br />
+    <br />
+    <asp:GridView ID="product_grid" runat="server" AutoGenerateColumns="False">
+    <Columns>
+          <asp:templatefield headertext="Author Name">
+                <ItemTemplate>
+                <asp:HyperLink ID="Testing" runat="server"
+                NavigateUrl='<%# "~/Product_Description.aspx?img=" + Eval("Name") %>'
+                Text='<%# Eval("Name") %>' />
+                </ItemTemplate>
+          </asp:templatefield>
+    </Columns>
+    <Columns>
+          <asp:templatefield headertext="Image">
+                <ItemTemplate>
+                <asp:Image ID="Image1" runat="server"
+                ImageUrl='<%# Eval("ImageUrl") %>' Height="40px" Width="40px" />
+                </ItemTemplate>
+          </asp:templatefield>
+    </Columns>  
+    <Columns>
+          <asp:templatefield headertext="Description">
+                <ItemTemplate>
+                <asp:Label ID="grid_decription" runat="server" Width="300px"
+                 Text='<%# DecriptionUrl(Eval("Name").ToString())  %>' />
+                </ItemTemplate>
+          </asp:templatefield>
+    </Columns>  
+    <Columns>
+        <asp:BoundField DataField="Price" HeaderText="Price" DataFormatString="${0}" />
+    </Columns>
+    </asp:GridView>
+    <br />
+    <br />
+    <br />
+    <br />
 </asp:Content>

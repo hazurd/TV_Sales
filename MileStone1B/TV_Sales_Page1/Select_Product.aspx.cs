@@ -4,13 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace TV_Sales_Page1
 {
     public partial class Select_Product : System.Web.UI.Page
     {
+        private Product theProduct;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            product_grid.DataSource = from Products in Data.SampleData()
+                                 select Products;
+            product_grid.DataBind();
+
             TelevisionDbDataContext context = new TelevisionDbDataContext();
             var query = (from p in context.Products
                          select p.Name).ToList();
@@ -42,6 +49,26 @@ namespace TV_Sales_Page1
 
             Response.Redirect("~/Product_Description.aspx?img=" + product);
             
+        }
+
+        public string DecriptionUrl(string theName)
+        {
+            string description;
+            string test;
+
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+            var query = from p in context.Products
+                        where p.Name == theName
+                        select p;
+            theProduct = query.Single();
+
+
+            var pathToFile = Server.MapPath(theProduct.Description);
+
+            description = File.ReadAllText(pathToFile);
+            description = description.Substring(0, 50);
+            description += "...";
+            return(description);  
         }
     }
 }

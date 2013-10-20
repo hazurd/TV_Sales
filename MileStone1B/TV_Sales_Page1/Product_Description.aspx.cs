@@ -44,7 +44,7 @@ namespace TV_Sales_Page1
         {
             img_tv.ImageUrl = theProduct.ImageUrl;
             var pathToFile = Server.MapPath(theProduct.Description);
-            lbldes.Text = File.ReadAllText(pathToFile);
+            lbldes.Text = File.ReadAllText(pathToFile);        
             lblprice.Text = string.Format("{0:C}", theProduct.Price);                           
         }
 

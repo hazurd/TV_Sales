@@ -22,6 +22,7 @@ namespace TV_Sales_Page1
             {
                int value = televisions[key];
 
+                //Checking to See if Quantity is greater than 0
                 if (value > 0)
                 {
                     var query = from p in context.Products
