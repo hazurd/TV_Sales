@@ -14,11 +14,12 @@ namespace TV_Sales_Page1
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            product_grid.DataSource = from Products in Data.SampleData()
-                                 select Products;
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+
+            product_grid.DataSource = from Products in context.Products
+                                      select Products;
             product_grid.DataBind();
 
-            TelevisionDbDataContext context = new TelevisionDbDataContext();
             var query = (from p in context.Products
                          select p.Name).ToList();
 
@@ -40,6 +41,18 @@ namespace TV_Sales_Page1
 
         }
 
+        protected void product_grid_OnPageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            product_grid.PageIndex = e.NewPageIndex;
+
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+
+            product_grid.DataSource = from Products in context.Products
+                                select Products;
+                                     
+            product_grid.DataBind();
+        }
+
         protected void btn_go_Click(object sender, EventArgs e)
         {
             string product = "";
@@ -54,7 +67,6 @@ namespace TV_Sales_Page1
         public string DecriptionUrl(string theName)
         {
             string description;
-            string test;
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
             var query = from p in context.Products

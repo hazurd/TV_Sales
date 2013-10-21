@@ -13,7 +13,8 @@ Here are the products we are currently offering:<br />
     Width="70px" />
     <br />
     <br />
-    <asp:GridView ID="product_grid" runat="server" AutoGenerateColumns="False">
+    <asp:GridView ID="product_grid" runat="server" OnPageIndexChanging="product_grid_OnPageIndexChanging" AutoGenerateColumns="False" 
+    AllowPaging="true" PagerSettings-Mode="NumericFirstLast" PageIndex="0" PageSize="3"> 
     <Columns>
           <asp:templatefield headertext="Author Name">
                 <ItemTemplate>
