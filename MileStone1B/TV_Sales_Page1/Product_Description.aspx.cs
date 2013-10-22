@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Web.Caching;
 
 namespace TV_Sales_Page1
 {
@@ -14,15 +15,26 @@ namespace TV_Sales_Page1
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             //Getting all products with requested image 
             string choice = Request.QueryString["img"];
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
-            var query = from p in context.Products
-                        where p.Name == choice
-                        select p;
-            theProduct = query.Single();
+            Product currentProduct = (Product)Cache["Description_Query"];
+            if (currentProduct == null || currentProduct.Name != choice)
+            {
+                // cache miss ($$$)
+                var query = from p in context.Products
+                            where p.Name == choice
+                            select p;
+                theProduct = query.Single();
+
+                Cache.Insert("Description_Query", theProduct, null, DateTime.UtcNow.AddMinutes(1), Cache.NoSlidingExpiration);
+            }
+            else
+            {
+                // cache hit
+                theProduct = (Product)Cache["Description_Query"];
+            }
 
             //Keeping the same Quantity Through Session
             Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];

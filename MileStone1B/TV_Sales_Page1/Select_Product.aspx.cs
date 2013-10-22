@@ -16,17 +16,36 @@ namespace TV_Sales_Page1
         protected void Page_Load(object sender, EventArgs e)
         {
             TelevisionDbDataContext context = new TelevisionDbDataContext();
+            List<string> names = null;
 
-            product_grid.DataSource = from Products in context.Products
-                                      select Products;
-            product_grid.DataBind();
 
-            var query = (from p in context.Products
-                         select p.Name).ToList();
+            List<Product> queryAsList = (List<Product>)Cache["Product_Query"];
+            if (queryAsList == null)
+            {
+                // cache miss ($$$)
+                var pSource = (from Products in context.Products
+                               select Products);
 
-            List<string> names = new List<string>();
-            names = query;
+                 var query = (from p in context.Products
+                              select p.Name).ToList();
 
+                 names = query;
+
+                List<Product> pList = pSource.ToList();
+
+                product_grid.DataSource = pSource;
+                product_grid.DataBind();
+
+                Cache.Insert("Product_Query", pList, null, DateTime.UtcNow.AddMinutes(10), Cache.NoSlidingExpiration);
+            }
+            else
+            {
+                // cache hit
+
+                product_grid.DataSource = Cache["Product_Query"];
+                product_grid.DataBind();
+            }
+            
             if (!IsPostBack)
             {
                 //Place all products in the drop down menu
@@ -35,22 +54,6 @@ namespace TV_Sales_Page1
                     ddlTvChoice.Items.Add(names[i].Trim()); 
                 }
             }
-
-            string bar = (string)Cache["foo"];
-            if (bar == null)
-            {
-                // cache miss ($$$)
-                bar = "bar";
-                Cache.Insert("foo", bar, null, DateTime.Now.AddMinutes(123), Cache.NoSlidingExpiration);
-               
-            }
-            else
-            {
-                // cache hit
-            }
-
-            // HERE: bar is initialized either way
-
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,13 +67,29 @@ namespace TV_Sales_Page1
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
 
-            Trace.Write("dev", "Before query");
+            List<Product> queryAsList = (List<Product>)Cache["Product_Query"];
+            if (queryAsList == null)
+            {
+                // cache miss ($$$)
+                var pSource = (from Products in context.Products
+                                          select Products);
 
-            product_grid.DataSource = from Products in context.Products
-                                select Products;
-                                     
-            product_grid.DataBind();
-            Trace.Write("dev", "After query");
+                List<Product> pList = pSource.ToList();
+
+                product_grid.DataSource = pSource;
+                product_grid.DataBind();
+
+                Cache.Insert("Product_Query", pList, null, DateTime.UtcNow.AddMinutes(10), Cache.NoSlidingExpiration);
+            }
+            else
+            {
+                // cache hit
+
+                product_grid.DataSource = Cache["Product_Query"];
+                product_grid.DataBind();
+            }
+
+            // HERE: bar is initialized either way
         }
 
         protected void btn_go_Click(object sender, EventArgs e)
