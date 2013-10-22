@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Web.Caching;
 
 namespace TV_Sales_Page1
 {
@@ -34,6 +35,22 @@ namespace TV_Sales_Page1
                     ddlTvChoice.Items.Add(names[i].Trim()); 
                 }
             }
+
+            string bar = (string)Cache["foo"];
+            if (bar == null)
+            {
+                // cache miss ($$$)
+                bar = "bar";
+                Cache.Insert("foo", bar, null, DateTime.Now.AddMinutes(123), Cache.NoSlidingExpiration);
+               
+            }
+            else
+            {
+                // cache hit
+            }
+
+            // HERE: bar is initialized either way
+
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,10 +64,13 @@ namespace TV_Sales_Page1
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
 
+            Trace.Write("dev", "Before query");
+
             product_grid.DataSource = from Products in context.Products
                                 select Products;
                                      
             product_grid.DataBind();
+            Trace.Write("dev", "After query");
         }
 
         protected void btn_go_Click(object sender, EventArgs e)
