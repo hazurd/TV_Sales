@@ -22,6 +22,15 @@ namespace TV_Sales_Page1 {
         protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
         
         /// <summary>
+        /// gv_cart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_cart;
+        
+        /// <summary>
         /// blList control.
         /// </summary>
         /// <remarks>

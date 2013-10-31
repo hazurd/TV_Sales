@@ -75,6 +75,27 @@ namespace TV_Sales_Page1
 	   This is accomplished using the `static` keyword on both fields and methods.
 
 	 */
+
+    public class CartItem
+    {
+        //Contructor
+        public CartItem(string name, decimal ppu, decimal totalPrice, int quantity)
+        {
+            Name = name;
+            PPU = ppu;
+            TotalPrice = totalPrice;
+            Quantity = quantity;
+        }
+
+        //Methods and Property's
+        // public int Id { get; set; }
+
+        public string Name { get; set; }
+        public decimal PPU { get; set; }
+        public decimal TotalPrice { get; set; }
+        public int Quantity { get; set; }
+    }
+
     public class Data
     {
         private const int SIZE = 10;

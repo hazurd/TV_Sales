@@ -45,7 +45,8 @@ namespace TV_Sales_Page1
                 product_grid.DataSource = Cache["Product_Query"];
                 product_grid.DataBind();
             }
-            
+           
+            /*
             if (!IsPostBack)
             {
                 //Place all products in the drop down menu
@@ -54,6 +55,7 @@ namespace TV_Sales_Page1
                     ddlTvChoice.Items.Add(names[i].Trim()); 
                 }
             }
+             * */
         }
 
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,11 +110,12 @@ namespace TV_Sales_Page1
             string description;
 
             TelevisionDbDataContext context = new TelevisionDbDataContext();
+            Product pdescription = (Product)Cache["Product_Description"];
+
             var query = from p in context.Products
                         where p.Name == theName
                         select p;
             theProduct = query.Single();
-
 
             var pathToFile = Server.MapPath(theProduct.Description);
 
@@ -120,6 +123,7 @@ namespace TV_Sales_Page1
             description = description.Substring(0, 50);
             description += "...";
             return(description);  
+            
         }
     }
 }

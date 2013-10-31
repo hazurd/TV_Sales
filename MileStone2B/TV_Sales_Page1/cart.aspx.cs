@@ -18,6 +18,8 @@ namespace TV_Sales_Page1
 
             decimal subTotal = 0;
 
+            List<CartItem> cartList = new List<CartItem>();
+
             foreach (var key in televisions.Keys)
             {
                int value = televisions[key];
@@ -32,8 +34,15 @@ namespace TV_Sales_Page1
 
                     blList.Items.Add(key + " (" + value + " @" + theProduct.Price + " ): $" + (theProduct.Price * value));
                     subTotal += (decimal)(theProduct.Price * value);
+
+
+                    CartItem cartitems = new CartItem(theProduct.Name, (decimal)theProduct.Price, (decimal)(theProduct.Price * value), value);
+                    cartList.Add(cartitems);
                 }
             }
+
+            gv_cart.DataSource = cartList;
+            gv_cart.DataBind();
 
             decimal gst = (decimal)(0.05) * subTotal;
             decimal pst = (decimal)(0.1) * subTotal;
