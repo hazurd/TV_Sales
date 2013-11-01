@@ -53,5 +53,50 @@ namespace TV_Sales_Page1
             lblTot.Text = string.Format("{0:C}", gst + pst + subTotal);   
             
         }
+
+        protected void btn_purchase_Click(object sender, EventArgs e)
+        {
+            TelevisionDbDataContext context = new TelevisionDbDataContext();
+
+            Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
+
+            //Updating the Database
+            foreach (var key in televisions.Keys)
+            {
+                int value = televisions[key];
+
+                //Checking to See if Quantity is greater than 0
+                if (value > 0)
+                {
+                    var query = from p in context.Products
+                                where p.Name == key
+                                select p;
+                    theProduct = query.Single();
+
+                    theProduct.Quantity = theProduct.Quantity - televisions[key];
+
+                    context.SubmitChanges();
+                }
+            }
+
+            var nameList = (from p in context.Products
+                         select p.Name).ToList();
+
+            List<string> names = new List<string>();
+            names = nameList;
+
+            televisions = new Dictionary<string, int>();
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                televisions.Add(names[i].Trim(), 0);
+            }
+
+            Session["cart"] = televisions;
+
+            Response.Redirect("~/ThankYou.aspx");
+
+
+        }
     }
 }

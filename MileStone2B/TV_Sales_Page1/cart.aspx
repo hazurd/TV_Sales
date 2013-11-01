@@ -59,5 +59,14 @@
     <asp:Label ID="lblTot" runat="server" Text="Label"></asp:Label>
     <br />
     <br />
+    Username:
+    <asp:TextBox ID="txt_username" runat="server"></asp:TextBox>
+    <br />
+    <br />
+    <asp:Button ID="btn_purchase" runat="server" OnClick="btn_purchase_Click" Text="Purchase" />
+    <br />
+    <br />
+    <br />
+    <br />
 
 </asp:Content>

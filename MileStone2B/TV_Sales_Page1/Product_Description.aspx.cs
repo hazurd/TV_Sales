@@ -73,7 +73,8 @@ namespace TV_Sales_Page1
             }
 
             //Update how many left
-            int quantLeft = (int)theProduct.Quantity - televisions[theProduct.Name];
+           // int quantLeft = (int)theProduct.Quantity - televisions[theProduct.Name];
+            int quantLeft = (int)theProduct.Quantity;
             lblquant.Text = string.Format("{0:0}", quantLeft);
 
             lblHowMuch.Text = ("You currently have " + total);
