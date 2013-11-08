@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Transactions;
 
 namespace TV_Sales_Page1
 {
@@ -57,46 +58,59 @@ namespace TV_Sales_Page1
         protected void btn_purchase_Click(object sender, EventArgs e)
         {
             TelevisionDbDataContext context = new TelevisionDbDataContext();
-
             Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
 
-            //Updating the Database
-            foreach (var key in televisions.Keys)
+
+            using (TransactionScope cartTrans = new TransactionScope())
             {
-                int value = televisions[key];
-
-                //Checking to See if Quantity is greater than 0
-                if (value > 0)
+                try
                 {
-                    var query = from p in context.Products
-                                where p.Name == key
-                                select p;
-                    theProduct = query.Single();
+                    //Updating the Database
+                    foreach (var key in televisions.Keys)
+                    {
+                        int value = televisions[key];
 
-                    theProduct.Quantity = theProduct.Quantity - televisions[key];
+                        //Checking to See if Quantity in cart is greater than 0
+                        if (value > 0)
+                        {
 
-                    context.SubmitChanges();
+                            var query = from p in context.Products
+                                        where p.Name == key
+                                        select p;
+                            theProduct = query.Single();
+
+                            theProduct.Quantity = theProduct.Quantity - televisions[key];
+                            context.SubmitChanges();
+
+                        }
+                    }
+                    var nameList = (from p in context.Products
+                                    select p.Name).ToList();
+
+                    List<string> names = new List<string>();
+                    names = nameList;
+
+                    televisions = new Dictionary<string, int>();
+
+                    for (int i = 0; i < names.Count; i++)
+                    {
+                        televisions.Add(names[i].Trim(), 0);
+                    }
+
+                    Session["cart"] = televisions;
+
+                    cartTrans.Complete();
+                }
+                catch (Exception E)
+                {
+                    cartTrans.Dispose();
+                    Response.Redirect("~/ErrorPage.aspx?err=" + E.Message);
+                }
+                finally
+                {
+                    Response.Redirect("~/ThankYou.aspx");
                 }
             }
-
-            var nameList = (from p in context.Products
-                         select p.Name).ToList();
-
-            List<string> names = new List<string>();
-            names = nameList;
-
-            televisions = new Dictionary<string, int>();
-
-            for (int i = 0; i < names.Count; i++)
-            {
-                televisions.Add(names[i].Trim(), 0);
-            }
-
-            Session["cart"] = televisions;
-
-            Response.Redirect("~/ThankYou.aspx");
-
-
         }
     }
 }

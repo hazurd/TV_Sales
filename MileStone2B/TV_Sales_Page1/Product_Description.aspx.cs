@@ -107,6 +107,8 @@ namespace TV_Sales_Page1
 
             televisions = setBasics(televisions);
             Session["cart"] = televisions;
+            //Cache.Insert("Description_Query", null, null, DateTime.UtcNow.AddMinutes(1), Cache.NoSlidingExpiration);
+
         }
 
         protected void Button2_Click(object sender, EventArgs e)
