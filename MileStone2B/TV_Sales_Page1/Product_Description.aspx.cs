@@ -74,7 +74,7 @@ namespace TV_Sales_Page1
 
             //Update how many left
            // int quantLeft = (int)theProduct.Quantity - televisions[theProduct.Name];
-            int quantLeft = (int)theProduct.Quantity;
+            int quantLeft = (int)theProduct.Quantity - televisions[theProduct.Name];
             lblquant.Text = string.Format("{0:0}", quantLeft);
 
             lblHowMuch.Text = ("You currently have " + total);
@@ -107,8 +107,7 @@ namespace TV_Sales_Page1
 
             televisions = setBasics(televisions);
             Session["cart"] = televisions;
-            //Cache.Insert("Description_Query", null, null, DateTime.UtcNow.AddMinutes(1), Cache.NoSlidingExpiration);
-
+            Cache.Remove("Description_Query");
         }
 
         protected void Button2_Click(object sender, EventArgs e)

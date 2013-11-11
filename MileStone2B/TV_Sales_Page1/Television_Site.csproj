@@ -210,6 +210,14 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="SummaryDb.cs">
+      <DependentUpon>SummaryDb.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="SummaryDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SummaryDb.dbml</DependentUpon>
+    </Compile>
     <Compile Include="TelevisionDb.cs">
       <DependentUpon>TelevisionDb.dbml</DependentUpon>
     </Compile>
@@ -254,12 +262,22 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SummaryDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>SummaryDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="TelevisionDb.dbml.layout">
       <DependentUpon>TelevisionDb.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SummaryDb.dbml.layout">
+      <DependentUpon>SummaryDb.dbml</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

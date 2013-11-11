@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="cs516_f13_08_db" Class="SummaryDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=207.162.58.50,1433\abott;Initial Catalog=cs516_f13_08_db;Persist Security Info=True;User ID=cs516_f13_08" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="cs516_f13_08_dbConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.OrderSummary" Member="OrderSummaries">
+    <Type Name="OrderSummary">
+      <Column Name="OrderId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="Address" Type="System.String" DbType="NChar(150)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="Province" Type="System.String" DbType="Char(2)" CanBeNull="true" />
+      <Column Name="PostalCode" Type="System.String" DbType="Char(6)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="SubTotal" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="PST" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="GST" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Total" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>

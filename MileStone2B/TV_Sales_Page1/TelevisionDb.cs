@@ -1,5 +1,9 @@
 namespace TV_Sales_Page1
 {
+    partial class TelevisionDbDataContext
+    {
+    }
+
     partial class Product
     {
 

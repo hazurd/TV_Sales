@@ -60,7 +60,7 @@ namespace TV_Sales_Page1
             TelevisionDbDataContext context = new TelevisionDbDataContext();
             Dictionary<string, int> televisions = (Dictionary<string, int>)Session["cart"];
 
-
+            
             using (TransactionScope cartTrans = new TransactionScope())
             {
                 try
@@ -99,16 +99,14 @@ namespace TV_Sales_Page1
 
                     Session["cart"] = televisions;
 
+                    Response.Redirect("~/ThankYou.aspx",false);
+
                     cartTrans.Complete();
                 }
                 catch (Exception E)
                 {
                     cartTrans.Dispose();
                     Response.Redirect("~/ErrorPage.aspx?err=" + E.Message);
-                }
-                finally
-                {
-                    Response.Redirect("~/ThankYou.aspx");
                 }
             }
         }
