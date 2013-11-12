@@ -262,11 +262,11 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SummaryDb.dbml">
+    <Content Include="SummaryDb.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>SummaryDb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <None Include="TelevisionDb.dbml.layout">
       <DependentUpon>TelevisionDb.dbml</DependentUpon>
     </None>
