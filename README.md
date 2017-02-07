@@ -1,11 +1,12 @@
 # README #
+***WARNING***This app is a work in progress
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README will (in time) describe steps necessary to get this application up and running.
 
 ### What is this repository for? ###
 
 * Quick summary
-* Version
+* Version 1.0.0
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
@@ -25,5 +26,5 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Repo owner (Dave Tetreault) or admin [Karl Dagenais](dagenaisxk@gmail.com)
+* Other community or team contact Jeffrey Bonnell @ jbiz6990@gmail.com
